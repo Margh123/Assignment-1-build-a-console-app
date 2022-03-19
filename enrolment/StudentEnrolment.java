@@ -1,0 +1,5 @@
+package enrolment;
+
+class StudentEnrolment {
+
+}
