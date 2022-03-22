@@ -1,15 +1,12 @@
 package enrolment;
 
-import java.util.StringTokenizer;
 
 public class Tester {
 
 	public static void main(String[] args) {
-
-		//StringTokenizer st = new StringTokenizer("3/31/2100","/");
-		//System.out.println(st.nextToken() + st.nextToken() + st.nextToken());
-		//System.out.println(VersatileKit.checkDate(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
-		System.out.println(Integer.parseInt("0007"));
+		Student t = Student.add("S452444", "yy", "02/29/2000");
+		Student t2 = Student.add("s452434", "8y", "02/29/2000");
+		Student t3 = Student.add("S452444", "8y", "02/29/2000");
 	}
 
 }
