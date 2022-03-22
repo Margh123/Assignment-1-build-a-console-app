@@ -4,23 +4,23 @@ import java.util.ArrayList;
 
 /**
  * <h1>Relation schema of course data</h1>
- *<code> Course(cid:  CHAR(10), 
+ *<code> Course(cid:  VARCHAR(10), 
  *			  cname:  VARCHAR(50),
  *			  numOfCredits:  BIT(10));  </code>
  * <h1>Creation of course data</h1>
  * <code> CREATE TABLE Course (
- * 			cid CHAR(10) PRIMARY KEY,
+ * 			cid VARCHAR(10) PRIMARY KEY,
  * 			cname VARCHAR(50) NOT NULL,
  * 			numOfCredits BIT(10) NOT NULL
  * 		);</code>
  * <p>Those are the elements which are used as conventions to design this class.</p>
  */
 	class Course {
-	static ArrayList<Course> cList = new ArrayList<Course>();
+	private static ArrayList<Course> cList = new ArrayList<Course>();
 	private static ArrayList<String> visited = new ArrayList<String>(); //Handling duplication 
-	private String id; 
+	private String id; // id can contains up to 10 any characters.
 	private String name; // name can contains up to 50 any characters.
-	private byte numOfCredits;
+	private byte numOfCredits;// A positive number smaller than 10
 	private Course(String id, String name, byte numOfCredits) {
 		this.id = id;
 		this.name = name;
@@ -38,9 +38,14 @@ import java.util.ArrayList;
 	byte getNumOfCredits() {
 		return numOfCredits;
 	}
+	ArrayList<Course> getList(String password) { //Using a password we prevent user from accessing the stdList to modify the ArrayList itself.
+		if (password.equals("s3836278")) {
+		return cList;}
+		throw new AccessDeniedException("Wrong Password!");
+	}
 	// Factory method
 	static Course add(String id, String name, byte numOfCredits) {
-		if(name.length()<=50 && name.length()>0) {
+		if((id.length()<=10 && id.length()>0)&&(name.length()<=50 && name.length()>0)&&(numOfCredits<=10 && numOfCredits>0 )) {
 			if (visited.contains(id)) {
 				throw new PrimaryKeyException("Duplication detected");
 			}

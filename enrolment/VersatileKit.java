@@ -1,5 +1,5 @@
 package enrolment;
-
+	class VersatileKit{};
 	class CDate {
 	private CDate() {};
 	//Check date (if the date is valid)
@@ -51,12 +51,15 @@ package enrolment;
 		
 	}
 }
-	@SuppressWarnings("serial")
 	class PrimaryKeyException extends RuntimeException{
 		public PrimaryKeyException(String str) {
 			super(str);
 		}
-
+	}
+	class AccessDeniedException extends RuntimeException{
+		public AccessDeniedException(String str) {
+			super(str);
+		}
 	}
 //[1]Bansal, S., 2019. C Program to check if a date is valid or not. [online] Tutorialspoint.com. Available at: 
 //<https://www.tutorialspoint.com/c-program-to-check-if-a-date-is-valid-or-not> [Accessed 21 March 2022].

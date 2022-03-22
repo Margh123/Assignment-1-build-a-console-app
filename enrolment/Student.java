@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * <p>Those are the elements which are used as conventions to design this class.</p>
  */
 	class Student {
-	static ArrayList<Student> stdList = new ArrayList<Student>();
+	private static ArrayList<Student> stdList = new ArrayList<Student>();
 	private static ArrayList<String> visited = new ArrayList<String>(); //Handling duplication 
 	private Student(String id, String name, String birthday) {
 		this.id = id;
@@ -40,6 +40,12 @@ import java.util.ArrayList;
 
 	String getBirthday() {
 		return birthday;
+	}
+	
+	ArrayList<Student> getList(String password) { //Using a password we prevent user from accessing the stdList to modify the ArrayList itself.
+		if (password.equals("s3836278")) {
+		return stdList;}
+		throw new AccessDeniedException("Wrong Password!");
 	}
 
 	// Factory method
