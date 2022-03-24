@@ -41,8 +41,8 @@ import java.util.ArrayList;
 	String getBirthday() {
 		return birthday;
 	}
-	
-	ArrayList<Student> getList(String password) { //Using a password we prevent user from accessing the stdList to modify the ArrayList itself.
+	/**<p>Using a password we prevent user from accessing the stdList to modify the ArrayList itself.</p>*/
+	static ArrayList<Student> getList(String password) { 
 		if (password.equals("s3836278")) {
 		return stdList;}
 		throw new AccessDeniedException("Wrong Password!");

@@ -4,12 +4,18 @@ package enrolment;
 public class Tester {
 
 	public static void main(String[] args) {
-		//Student t = Student.add("S452444", "yy", "02/29/2000");
-		//Student t2 = Student.add("S452434", "8y", "02/29/2000");
-		//Student t3 = Student.add("S452444", "8y", "02/29/2000");
+		Student a = Student.add("S346234", "Conheo", "02/23/2001");
+		Student b = Student.add("S324612", "Adele", "06/12/2002");
+		Student c = Student.add("S123458", "Coty", "03/14/2001");
+		Student d = Student.add("S332165", "Aeon", "03/15/2002");
 		
-		Course c = Course.add("ZOM4356", "ZombieTrainning", (byte)5);
-		Course d = Course.add("ZOFFF4356", "F", (byte)2);
+		Course c1 = Course.add("HuyMai", "Julie", (byte)4);
+		Course c2 = Course.add("HuyNguyen", "Westfield", (byte)9);
+		
+		App ap = new App();
+		ap.add();
+		System.out.println(StudentEnrolment.getList("s3836278").get(0).getStd().getBirthday());
+		
 	}
 
 }

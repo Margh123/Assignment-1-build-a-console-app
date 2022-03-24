@@ -51,8 +51,14 @@ package enrolment;
 		
 	}
 }
+	//Exceptions
 	class PrimaryKeyException extends RuntimeException{
 		public PrimaryKeyException(String str) {
+			super(str);
+		}
+	}
+	class RelationException extends RuntimeException{
+		public RelationException(String str) {
 			super(str);
 		}
 	}

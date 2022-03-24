@@ -38,7 +38,8 @@ import java.util.ArrayList;
 	byte getNumOfCredits() {
 		return numOfCredits;
 	}
-	ArrayList<Course> getList(String password) { //Using a password we prevent user from accessing the stdList to modify the ArrayList itself.
+	/**<p>Using a password we prevent user from accessing the stdList to modify the ArrayList itself.</p>*/
+	static ArrayList<Course> getList(String password) { 
 		if (password.equals("s3836278")) {
 		return cList;}
 		throw new AccessDeniedException("Wrong Password!");
