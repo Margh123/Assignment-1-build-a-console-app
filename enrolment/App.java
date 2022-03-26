@@ -12,6 +12,13 @@ interface StudentEnrolmentManager{
 }
 
 class App implements StudentEnrolmentManager{ // This is a flatform for the user to use the software. Every property that the user uses is in here.
+	// This is a singleton class in order to be still implements the interface without declare all the methods here as static.
+	private static App turtle = new App();
+	private App() {};
+	public static App getApp() {
+		return turtle;
+		
+	}
 
 	@Override
 	public void add() { // or enroll
