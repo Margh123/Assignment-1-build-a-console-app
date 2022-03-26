@@ -63,8 +63,22 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 	}
 
 	@Override
-	public void delete() {
-	
+	public void delete() { // Delete a record from StudentEnrolment relation
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter student id:");
+		String sid = sc.next();
+		System.out.print("Enter course id:");
+		String cid = sc.next();
+		sc.close();
+		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278"); // Each StudentEnrolment record is specified by the Student id and Course
+		//id simultaneously, in this app we don't assume that the student enroll the same course in a different semester.
+		for (StudentEnrolment se : arst) {
+			if ((se.getStd().getId()+se.getCrs().getId()).equals(sid+cid)){
+				arst.remove(se);
+				break;
+			}
+		}
+		throw new NoSuchElementException("No enrolment is found in the list");
 	}
 
 	@Override
