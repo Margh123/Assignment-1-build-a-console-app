@@ -12,7 +12,7 @@ public class Tester {
 		Course c1 = Course.add("HuyMai", "Julie", (byte)4);
 		Course c2 = Course.add("HuyNguyen", "Westfield", (byte)9);
 		
-		App ap = new App();
+		App ap = App.getApp();
 		ap.add();
 		System.out.println(StudentEnrolment.getList("s3836278").get(0).getStd().getBirthday());
 		

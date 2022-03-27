@@ -19,8 +19,12 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 		return turtle;
 		
 	}
-
 	@Override
+	/**
+	 * <p> Let X is the Student id, Y is the Course id, Z is the semester,</p>
+	 * <code>INSERT INTO Enrolled
+	 *	VALUES (X, Y, Z);</code>
+	 */
 	public void add() { // or enroll
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Enter student id:");
@@ -63,15 +67,19 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 	}
 
 	@Override
-	public void delete() { // Delete a record from StudentEnrolment relation
+	/**
+	 * <p> Let X is the Student id, Y is the Course id. </p>
+	 * <code> DELETE FROM Enrolled WHERE sid = X AND cid = Y;</code>
+	 */
+	public void delete() { // Delete a record from Enrolled relation
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Enter student id:");
 		String sid = sc.next();
 		System.out.print("Enter course id:");
 		String cid = sc.next();
 		sc.close();
-		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278"); // Each StudentEnrolment record is specified by the Student id and Course
-		//id simultaneously, in this app we don't assume that the student enroll the same course in a different semester.
+		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278"); // Each Enrolled record is specified by the Student id and Course
+		//id simultaneously.
 		for (StudentEnrolment se : arst) {
 			if ((se.getStd().getId()+se.getCrs().getId()).equals(sid+cid)){
 				arst.remove(se);
@@ -83,7 +91,7 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 
 	@Override
 	public void getOne() {
-
+		
 	}
 
 	@Override

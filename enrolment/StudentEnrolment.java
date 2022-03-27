@@ -2,7 +2,18 @@ package enrolment;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
-
+/**
+ * <h1>Creation of Enrolled data</h1>
+ * <code> CREATE TABLE Enrolled (
+ * 			sid CHAR(7),
+ * 			cid VARCHAR(10),
+ * 			sem CHAR(5),
+ * 			PRIMARY KEY(sid, cid),
+ * 			FOREIGN KEY(sid) REFERENCES Student(sid),
+ *			FOREIGN KEY(cid) REFERENCES Course(cid)
+ * 		);</code>
+ * <p>Those are the elements which are used as conventions to design this class.</p>
+ */
 class StudentEnrolment {
 	private static ArrayList<StudentEnrolment> enList = new ArrayList<StudentEnrolment>();
 	private static ArrayList<String> visited = new ArrayList<String>(); //Prevent second instantiation of the same object.
@@ -39,7 +50,7 @@ class StudentEnrolment {
 		int getStdBirthYear = Integer.parseInt(std.getBirthday().substring(std.getBirthday().length()-4, std.getBirthday().length()));
 		int getSemYear = Integer.parseInt(sem.substring(0, 4));
 		String vs = std.getId() + crs.getId(); //To prevent duplication and a same student with same course can't be enrolled again
-		if (std != null && crs != null && sem.matches(regSem) && getSemYear >= getStdBirthYear + 18) { //18 years of learning in lower schools.
+		if (std != null && crs != null && sem.matches(regSem) && getSemYear >= getStdBirthYear + 18) { //18 years of learning lower schools.
 			if (visited.contains(vs)) {
 				throw new RelationException("Duplication detected");
 			}
