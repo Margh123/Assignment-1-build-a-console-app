@@ -7,7 +7,7 @@ interface StudentEnrolmentManager{
 	void add();
 	void update();
 	void delete();
-	void getOne();
+	void getOne(boolean choice);
 	void getAll();
 }
 
@@ -83,15 +83,45 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 		for (StudentEnrolment se : arst) {
 			if ((se.getStd().getId()+se.getCrs().getId()).equals(sid+cid)){
 				arst.remove(se);
-				break;
+				return;
 			}
 		}
 		throw new NoSuchElementException("No enrolment is found in the list");
 	}
 
 	@Override
-	public void getOne() {
-		
+	public void getOne(boolean choice) {
+		int counter = 0;
+		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace(); // We don't want update() mtethod to write to csv file but main method is fine.
+		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
+		//
+		//
+		if (choice) { //Print all courses for 1 student in 1 semester.
+				Scanner sc = new Scanner(System.in); 
+				System.out.print("Enter student id:");
+				String sid = sc.next();
+				System.out.print("Enter semester:");
+				String sem = sc.next();
+				sc.close();
+			for (StudentEnrolment se : arst) {
+				if ((se.getStd().getId()+se.getSem()).equals(sid+sem)) {
+					counter++;
+					if(stackTraceElements[2].getMethodName().equals("update")){ // If getOne() is called from update()
+						// Only print for update()
+						if(arst.indexOf(se)==arst.size()-1) {
+							break;
+						}
+						continue;
+					}
+					// Print to the console and write to csv file (also ask user if they want to save to csv)
+				}
+			}
+			if(counter == 0) {
+			throw new NoSuchElementException("No student or semester is found in the list");}
+		}
+		//
+		//
+
 	}
 
 	@Override
