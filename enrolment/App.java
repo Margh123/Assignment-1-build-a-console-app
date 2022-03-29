@@ -7,7 +7,7 @@ interface StudentEnrolmentManager{
 	void add();
 	void update();
 	void delete();
-	void getOne(boolean choice);
+	void getOne();
 	void getAll();
 }
 
@@ -27,13 +27,13 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 	 */
 	public void add() { // or enroll
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Enter student id:");
+		System.out.print("Enter student id you want to add:");
 		String sid = sc.next();
-		System.out.print("Enter course id:");
+		System.out.print("Enter course id you want to add:");
 		String cid = sc.next();
-		System.out.print("Enter semester:");
+		System.out.print("Enter semester you want to add:");
 		String sem = sc.next();
-		sc.close();
+		//sc.close(); It would we dangerous to close the scanner as it would close to input stream too
 		// We need to find the corresponding object based on the yeilded input.
 		//Student
 		Student st = null;
@@ -63,7 +63,6 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 
 	@Override
 	public void update() {
-	
 	}
 
 	@Override
@@ -73,11 +72,11 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 	 */
 	public void delete() { // Delete a record from Enrolled relation
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Enter student id:");
+		System.out.print("Enter student id you want to delete:");
 		String sid = sc.next();
-		System.out.print("Enter course id:");
+		System.out.print("Enter course id you want to delete:");
 		String cid = sc.next();
-		sc.close();
+		//sc.close(); t would we dangerous to close the scanner as it would close to input stream too
 		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278"); // Each Enrolled record is specified by the Student id and Course
 		//id simultaneously.
 		for (StudentEnrolment se : arst) {
@@ -90,43 +89,92 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 	}
 
 	@Override
-	public void getOne(boolean choice) {
-		int counter = 0;
-		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace(); // We don't want update() mtethod to write to csv file but main method is fine.
-		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
-		//
-		//
-		if (choice) { //Print all courses for 1 student in 1 semester.
-				Scanner sc = new Scanner(System.in); 
-				System.out.print("Enter student id:");
-				String sid = sc.next();
-				System.out.print("Enter semester:");
-				String sem = sc.next();
-				sc.close();
-			for (StudentEnrolment se : arst) {
-				if ((se.getStd().getId()+se.getSem()).equals(sid+sem)) {
-					counter++;
-					if(stackTraceElements[2].getMethodName().equals("update")){ // If getOne() is called from update()
-						// Only print for update()
-						if(arst.indexOf(se)==arst.size()-1) {
-							break;
-						}
-						continue;
-					}
-					// Print to the console and write to csv file (also ask user if they want to save to csv)
-				}
-			}
-			if(counter == 0) {
-			throw new NoSuchElementException("No student or semester is found in the list");}
-		}
-		//
-		//
-
+	public void getOne() {
+		
 	}
 
 	@Override
 	public void getAll() {
 
 	} 
-
+	// For printing all.
+	/**
+	 * <p> Let X is the Student id, Z is the semester. </p>
+	 * <code> SELECT cid FROM Enrolled;
+	 *  WHERE sid = X AND sem = Z;</code>
+	 */
+	public void printCourse() {
+		int counter = 0;
+		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace(); // We don't want update() mtethod to write to csv file but main method is fine.
+		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
+		System.out.println("Print all courses for 1 student in 1 semester");
+		Scanner sc = new Scanner(System.in); 
+		System.out.print("Enter student id:");
+		String sid = sc.next();
+		System.out.print("Enter semester:");
+		String sem = sc.next();
+	for (StudentEnrolment se : arst) {
+		if ((se.getStd().getId()+se.getSem()).equals(sid+sem)) {
+			counter++;
+			if(stackTraceElements[2].getMethodName().equals("update")){ // If getOne() is called from update()
+				// Only print for update()
+				System.out.println("Only print for update()");
+				if(arst.indexOf(se)==arst.size()-1) {
+					break;
+				}
+				continue;
+			}
+			// Print to the console and write to csv file
+			System.out.println(" Print to the console and write to csv file");
+		}
+	}
+	if(counter == 0) {
+	throw new NoSuchElementException("No student or semester is found in the list");}
+	}
+		/**
+		 * <p> Let Y is the Course id, Z is the semester. </p>
+		 * <code> SELECT sid FROM Enrolled;
+		 *  WHERE cid = Y AND sem = Z;</code>
+		 */
+	public void printStudent() {
+		int counter = 0;
+		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
+		System.out.println("Print all students of 1 course in 1 semester");
+		Scanner sc = new Scanner(System.in); 
+		System.out.print("Enter course id:");
+		String cid = sc.next();
+		System.out.print("Enter semester:");
+		String sem = sc.next();
+		for (StudentEnrolment se : arst) {
+			if ((se.getCrs().getId()+se.getSem()).equals(cid+sem)) {
+				counter++;
+				// Print to the console and write to csv file
+				System.out.println(" Print to the console and write to csv file");
+			}
+		}
+		if(counter == 0) {
+		throw new NoSuchElementException("No course or semester is found in the list");}
+		}
+			/**
+			 * <p> Let Z is the semester. </p>
+			 * <code> SELECT cid FROM Enrolled;
+			 *  WHERE sem = Z;</code>
+			 */
+	public void printOffered() {
+		int counter = 0;
+		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
+		System.out.println("Prints all courses offered in 1 semester");
+		Scanner sc = new Scanner(System.in); 
+		System.out.print("Enter semester:");
+		String sem = sc.next();
+		for (StudentEnrolment se : arst) {
+			if (se.getSem().equals(sem)) {
+				counter++;
+				// Print to the console and write to csv file
+				System.out.println(" Print to the console and write to csv file");
+			}
+		}
+		if(counter == 0) {
+		throw new NoSuchElementException("No semester is found in the list");}
+	}
 }
