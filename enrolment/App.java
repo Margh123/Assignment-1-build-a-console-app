@@ -90,13 +90,38 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 	}
 
 	@Override
+	/**
+	 * Let X is the Student id, Y is the Course id
+	 * SELECT * FROM Enrolled;
+	 * WHERE sid = X AND cid = Y;
+	 */
 	public void getOne() {
-		
+		System.out.println("Get one record in Enrolled table");
+		Scanner sc = new Scanner(System.in); 
+		System.out.print("Enter student id:");
+		String sid = sc.next();
+		System.out.print("Enter course id:");
+		String cid = sc.next();
+		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
+		for(StudentEnrolment se :arst) {
+			if(se.getStd().getId().equals(sid) && se.getCrs().getId().equals(cid)) {
+			System.out.println(se.getStd().getId()+","+se.getCrs().getId()+","+se.getSem());
+			return;
+			}
+		}
+		throw new NoSuchElementException("No student or course is found in the list");
 	}
 
 	@Override
+	/**
+	 * SELECT * FROM Enrolled;
+	 */
 	public void getAll() {
-
+		System.out.println("Get all record in Enrolled table");
+		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
+		for(StudentEnrolment se :arst) {
+			System.out.println(se.getStd().getId()+","+se.getCrs().getId()+","+se.getSem());
+		}
 	} 
 	// For printing all.
 	/**
