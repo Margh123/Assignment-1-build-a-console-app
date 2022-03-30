@@ -148,12 +148,13 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 		}
 		if(arst.indexOf(se)==arst.size()-1 && stackTraceElements[2].getMethodName().equals("main")) {
 			System.out.println(sb.toString());
-			System.out.println("Print to the console and write to csv file");
+			System.out.println("writing to csv file");
 			try {
 				Printer.saveData(sb.toString());
 			} catch (IOException e) {
-				System.err.print("Make sure you have closed the csv file before you run the program");}
-				System.exit(1);
+				System.err.print("Make sure you have closed the csv file before you run the program");
+				System.exit(1);}
+				
 		}
 	}
 	if(counter == 0) {
@@ -165,6 +166,7 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 		 *  WHERE cid = Y AND sem = Z;</code>
 		 */
 	public void printStudent() {
+		StringBuilder sb = new StringBuilder();
 		int counter = 0;
 		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
 		System.out.println("Print all students of 1 course in 1 semester");
@@ -177,7 +179,28 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 			if ((se.getCrs().getId()+se.getSem()).equals(cid+sem)) {
 				counter++;
 				// Print to the console and write to csv file
-				System.out.println(" Print to the console and write to csv file");
+				if (counter == 1) {
+					sb.append("Print all student for "+se.getCrs().getName()+" "+ "("+se.getCrs().getId()+")"+ " " +
+							"in semester"+"("+sem+")");
+					sb.append('\n');
+					sb.append("id"+","+"name"+","+"birthday");
+					sb.append('\n');
+				}
+				sb.append(se.getStd().getId());
+				sb.append(',');
+				sb.append(se.getStd().getName());
+				sb.append(',');
+				sb.append(se.getStd().getBirthday());
+				sb.append('\n');
+			}
+			if(arst.indexOf(se)==arst.size()-1) {
+				System.out.println(sb.toString());
+				System.out.println("writing to csv file");
+				try {
+					Printer.saveData(sb.toString());
+				} catch (IOException e) {
+					System.err.print("Make sure you have closed the csv file before you run the program");
+					System.exit(1);}
 			}
 		}
 		if(counter == 0) {

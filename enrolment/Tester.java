@@ -23,8 +23,9 @@ public class Tester {
 		StudentEnrolment.add(b, c2, "2022A", "s3836278");
 		StudentEnrolment.add(b, c3, "2021A", "s3836278");
 		StudentEnrolment.add(b, c4, "2022A", "s3836278");
+		
 		ap.printCourse();
-		ap.printCourse();
+		ap.printStudent();
 
 	}
 
