@@ -1,7 +1,6 @@
 package enrolment;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 /**
  * <h1>Creation of Enrolled data</h1>
  * <code> CREATE TABLE Enrolled (

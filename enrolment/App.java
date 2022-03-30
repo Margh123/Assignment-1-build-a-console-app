@@ -1,4 +1,5 @@
 package enrolment;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -104,6 +105,7 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 	 *  WHERE sid = X AND sem = Z;</code>
 	 */
 	public void printCourse() {
+		StringBuilder sb = new StringBuilder();
 		int counter = 0;
 		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace(); // We don't want update() mtethod to write to csv file but main method is fine.
 		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
@@ -118,14 +120,40 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 			counter++;
 			if(stackTraceElements[2].getMethodName().equals("update")){ // If getOne() is called from update()
 				// Only print for update()
-				System.out.println("Only print for update()");
-				if(arst.indexOf(se)==arst.size()-1) {
-					break;
+				if (counter == 1) {
+					System.out.println("Print all course for "+se.getStd().getName()+" "+ "("+se.getStd().getId()+")"+ " " +
+							"in semester"+"("+sem+")");
+					System.out.println("id"+","+"name"+","+"credit");
 				}
-				continue;
+				System.out.print(se.getCrs().getId()+",");
+				System.out.print(se.getCrs().getName()+",");
+				System.out.println(se.getCrs().getNumOfCredits());
 			}
-			// Print to the console and write to csv file
-			System.out.println(" Print to the console and write to csv file");
+			if(stackTraceElements[2].getMethodName().equals("main")){ // If getOne() is called from main()
+				// Print to the console and write to csv file
+				if (counter == 1) {
+					sb.append("Print all course for "+se.getStd().getName()+" "+ "("+se.getStd().getId()+")"+ " " +
+							"in semester"+"("+sem+")");
+					sb.append('\n');
+					sb.append("id"+","+"name"+","+"credit");
+					sb.append('\n');
+				}
+				sb.append(se.getCrs().getId());
+				sb.append(',');
+				sb.append(se.getCrs().getName());
+				sb.append(',');
+				sb.append(se.getCrs().getNumOfCredits());
+				sb.append('\n');
+			}
+		}
+		if(arst.indexOf(se)==arst.size()-1 && stackTraceElements[2].getMethodName().equals("main")) {
+			System.out.println(sb.toString());
+			System.out.println("Print to the console and write to csv file");
+			try {
+				Printer.saveData(sb.toString());
+			} catch (IOException e) {
+				System.err.print("Make sure you have closed the csv file before you run the program");}
+				System.exit(1);
 		}
 	}
 	if(counter == 0) {

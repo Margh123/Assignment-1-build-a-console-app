@@ -1,5 +1,10 @@
 package enrolment;
-	class VersatileKit{};
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+class VersatileKit{};
 	class CDate {
 	private CDate() {};
 	//Check date (if the date is valid)
@@ -67,5 +72,16 @@ package enrolment;
 			super(str);
 		}
 	}
+class Printer{
+	private Printer() {};
+	public static void saveData(String s) throws IOException{ // Warning, make sure that you have closed the report.cvs file on taskbar
+		PrintWriter writer = null;
+		writer = new PrintWriter(new FileWriter("report.csv",true));
+		writer.write(s+"\n");
+		writer.flush();
+		writer.close();
+	}
+
+}
 //[1]Bansal, S., 2019. C Program to check if a date is valid or not. [online] Tutorialspoint.com. Available at: 
 //<https://www.tutorialspoint.com/c-program-to-check-if-a-date-is-valid-or-not> [Accessed 21 March 2022].
