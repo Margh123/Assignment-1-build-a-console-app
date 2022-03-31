@@ -28,6 +28,12 @@ import java.util.ArrayList;
 		visited.add(this.id);
 		cList.add(this);
 	}
+	static { // No for loop
+		Course.add("COSC4030", "Theory of Computation", (byte)5);//[0]
+		Course.add("BUS2232", "Business Law", (byte)3);//[1]
+		Course.add("PHYS1230", "Introductory Human Physiology", (byte)4);//[2]
+		Course.add("COSC3321", "Artificial Intelligence", (byte)3);//[3]
+	}
 	//Encapsulation 
 	String getId() {
 		return id;

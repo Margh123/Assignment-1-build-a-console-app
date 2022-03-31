@@ -20,6 +20,8 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 		return turtle;
 		
 	}
+	private static String placeholder;
+	private static String placeholder2;// placeholder is a single word in english
 	@Override
 	/**
 	 * <p> Let X is the Student id, Y is the Course id, Z is the semester,</p>
@@ -27,13 +29,20 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 	 *	VALUES (X, Y, Z);</code>
 	 */
 	public void add() { // or enroll
+		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+		String sid = null;
+		String sem = null;
 		Scanner sc = new Scanner(System.in);
-		System.out.print("Enter student id you want to add:");
-		String sid = sc.next();
+		if(stackTraceElements[2].getMethodName().equals("main")){
+			System.out.print("Enter student id you want to add:");
+			sid = sc.next();
+			System.out.print("Enter semester you want to add:");
+			sem = sc.next();}
+		if(stackTraceElements[2].getMethodName().equals("update")){
+			sid = placeholder;
+		    sem = placeholder2;}
 		System.out.print("Enter course id you want to add:");
 		String cid = sc.next();
-		System.out.print("Enter semester you want to add:");
-		String sem = sc.next();
 		//sc.close(); It would we dangerous to close the scanner as it would close to input stream too
 		// We need to find the corresponding object based on the yeilded input.
 		//Student
@@ -64,6 +73,18 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 
 	@Override
 	public void update() {
+		printCourse();
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Do you want to delete or add new courses for student " + placeholder +
+				" in semester "+placeholder2+" in the list ? D for delete, A for add");
+		char c = sc.next().charAt(0);
+		switch(c) {
+			case 'D': delete();
+					  break;
+			case 'A': add();
+			  		  break;
+			default: throw new IllegalArgumentException();
+		}
 	}
 
 	@Override
@@ -72,9 +93,14 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 	 * <code> DELETE FROM Enrolled WHERE sid = X AND cid = Y;</code>
 	 */
 	public void delete() { // Delete a record from Enrolled relation
+		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+		String sid = null;
 		Scanner sc = new Scanner(System.in);
+		if(stackTraceElements[2].getMethodName().equals("main")){
 		System.out.print("Enter student id you want to delete:");
-		String sid = sc.next();
+		sid = sc.next();}
+		if(stackTraceElements[2].getMethodName().equals("update")){
+				sid = placeholder;}
 		System.out.print("Enter course id you want to delete:");
 		String cid = sc.next();
 		//sc.close(); t would we dangerous to close the scanner as it would close to input stream too
@@ -140,6 +166,8 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 		String sid = sc.next();
 		System.out.print("Enter semester:");
 		String sem = sc.next();
+		placeholder = sid;
+		placeholder2 = sem;
 	for (StudentEnrolment se : arst) {
 		if ((se.getStd().getId()+se.getSem()).equals(sid+sem)) {
 			counter++;

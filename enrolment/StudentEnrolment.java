@@ -26,6 +26,16 @@ class StudentEnrolment {
 	private Course crs;
 	private String sem; // Semester (year + [A/B/C])
 	
+	static { // Populating enrolment list.
+		int[] std = {0,1,2,3,4,5,6,7,8,9,0,6,4,1,0};
+		int[] crs = {0,0,1,2,1,3,3,1,2,1,2,0,3,3,1};
+		String[] sem = {"2020C","2020C","2020B","2021A","2020C","2021A","2021A","2020C","2021A","2020B","2021A","2020C","2021A","2021A","2020C"};
+		for(int i=0; i<15;i++) {
+		StudentEnrolment.add(Student.getList("s3836278").get(std[i]), Course.getList("s3836278").get(crs[i]), sem[i], "s3836278");
+		}
+		
+	}
+	
 	//Encapsulation
 	Student getStd() {
 		return std;

@@ -29,6 +29,19 @@ import java.util.ArrayList;
 	private String name; // name can contains up to 30 any characters.
 	private String birthday;// birthday should be in MM/DD/YYYY format.
 	
+	static { // No for loop
+		Student.add("S101312","Alex Mike","10/13/1998"); // [0]
+		Student.add("S102732","Mark Duong","08/28/2001");// [1]
+		Student.add("S103723","Hai Hoang Vu","04/25/2000");// [2]
+		Student.add("S103821","Son Minh Doan","11/15/1999");// [3]
+		Student.add("S101163","Joseph Fergile","10/29/1998");// [4]
+		Student.add("S101153","Jang Min Seon","09/25/2000");// [5]
+		Student.add("S103817","Thuy Thu Nguyen","03/04/2000");//[6]
+		Student.add("S103912","Son Thanh Le","02/09/2001");//[7]
+		Student.add("S102192","Mark Patterson","06/05/2000");//[8]
+		Student.add("S103192","Ngan Thu Vo","03/09/1998");	//[9]		
+	}
+	
 	//Encapsulation 
 	String getId() {
 		return id;
