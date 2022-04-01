@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * 		);</code>
  * <p>Those are the elements which are used as conventions to design this class.</p>
  */
-	class Course {
+	public class Course {
 	private static ArrayList<Course> cList = new ArrayList<Course>();
 	private static ArrayList<String> visited = new ArrayList<String>(); //Handling duplication 
 	private String id; // id can contains up to 10 any characters.
@@ -35,17 +35,17 @@ import java.util.ArrayList;
 		Course.add("COSC3321", "Artificial Intelligence", (byte)3);//[3]
 	}
 	//Encapsulation 
-	String getId() {
+	public String getId() {
 		return id;
 	}
-	String getName() {
+	public String getName() {
 		return name;
 	}
-	byte getNumOfCredits() {
+	public byte getNumOfCredits() {
 		return numOfCredits;
 	}
 	/**<p>Using a password we prevent user from accessing the stdList to modify the ArrayList itself.</p>*/
-	static ArrayList<Course> getList(String password) { 
+	public static ArrayList<Course> getList(String password) { 
 		if (password.equals("s3836278")) {
 		return cList;}
 		throw new AccessDeniedException("Wrong Password!");

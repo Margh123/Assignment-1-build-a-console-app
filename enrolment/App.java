@@ -12,7 +12,7 @@ interface StudentEnrolmentManager{
 	void getAll();
 }
 
-class App implements StudentEnrolmentManager{ // This is a flatform for the user to use the software. Every property that the user uses is in here.
+public class App implements StudentEnrolmentManager{ // This is a flatform for the user to use the software. Every property that the user uses is in here.
 	// This is a singleton class in order to be still implements the interface without declare all the methods here as static.
 	private static App turtle = new App();
 	private App() {};
@@ -22,6 +22,18 @@ class App implements StudentEnrolmentManager{ // This is a flatform for the user
 	}
 	private static String placeholder;
 	private static String placeholder2;// placeholder is a single word in english
+	/*public static String[] getPlaceholder() {
+		String[] arr = {placeholder, placeholder2};
+		return arr;
+	}*/
+	public static void setPlaceholder(String placeholder, String placeholder2, String adminPassword) {
+		if (adminPassword.equals("s3836278")) {
+			App.placeholder = placeholder;
+			App.placeholder2 = placeholder2;
+			return;
+			}
+			throw new AccessDeniedException("Wrong Password!");
+	}
 	@Override
 	/**
 	 * <p> Let X is the Student id, Y is the Course id, Z is the semester,</p>

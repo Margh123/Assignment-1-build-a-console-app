@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * 		);</code>
  * <p>Those are the elements which are used as conventions to design this class.</p>
  */
-class StudentEnrolment {
+public class StudentEnrolment {
 	private static ArrayList<StudentEnrolment> enList = new ArrayList<StudentEnrolment>();
 	private static ArrayList<String> visited = new ArrayList<String>(); //Prevent second instantiation of the same object.
 	StudentEnrolment(Student std,Course crs, String sem){
@@ -37,19 +37,22 @@ class StudentEnrolment {
 	}
 	
 	//Encapsulation
-	Student getStd() {
+	public Student getStd() {
 		return std;
 	}
-	Course getCrs() {
+	public Course getCrs() {
 		return crs;
 	}
-	String getSem() {
+	public String getSem() {
 		return sem;
 	}
-	static ArrayList<StudentEnrolment> getList(String password) { 
+	public static ArrayList<StudentEnrolment> getList(String password) { 
 		if (password.equals("s3836278")) {
 		return enList;}
 		throw new AccessDeniedException("Wrong Password!");
+	}
+	public static void removeVisited() {
+		visited.remove(visited.size()-1);
 	}
 	// Factory method
 	static StudentEnrolment add(Student std,Course crs, String sem, String adminPassword) throws PrimaryKeyException {
