@@ -146,7 +146,7 @@ class AppTest {
 	            ()->{obj.delete();} ); 
 	}
 	@Test
-	void testGetOne() {
+	void testGetOne() { 
 		try {
 			obj.getOne();
 		}

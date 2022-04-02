@@ -297,6 +297,15 @@ public class App implements StudentEnrolmentManager{ // This is a flatform for t
 					sb.append('\n');
 				}
 				if(result.contains(se.getCrs())) {
+					if(arst.indexOf(se)==arst.size()-1) {
+						System.out.println(sb.toString());
+						System.out.println("writing to csv file");
+						try {
+							Printer.saveData(sb.toString());
+						} catch (IOException e) {
+							System.err.print("Make sure you have closed the csv file before you run the program");
+							System.exit(1);}
+					}
 					continue;
 				}
 				sb.append(se.getCrs().toString());
