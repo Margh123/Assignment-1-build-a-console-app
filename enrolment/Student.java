@@ -54,6 +54,11 @@ import java.util.ArrayList;
 	public String getBirthday() {
 		return birthday;
 	}
+	@Override
+	public String toString() {
+		return this.getId() + "," + this.getName() + "," + this.getBirthday() + "\n";
+		
+	}
 	/**<p>Using a password we prevent user from accessing the stdList to modify the ArrayList itself.</p>*/
 	public static ArrayList<Student> getList(String password) { 
 		if (password.equals("s3836278")) {

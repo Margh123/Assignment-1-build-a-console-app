@@ -8,8 +8,8 @@ interface StudentEnrolmentManager{
 	void add();
 	void update();
 	void delete();
-	void getOne();
-	void getAll();
+	StudentEnrolment getOne();
+	ArrayList<StudentEnrolment> getAll();
 }
 
 public class App implements StudentEnrolmentManager{ // This is a flatform for the user to use the software. Every property that the user uses is in here.
@@ -133,7 +133,7 @@ public class App implements StudentEnrolmentManager{ // This is a flatform for t
 	 * SELECT * FROM Enrolled;
 	 * WHERE sid = X AND cid = Y;
 	 */
-	public void getOne() {
+	public StudentEnrolment getOne() {
 		System.out.println("Get one record in Enrolled table");
 		Scanner sc = new Scanner(System.in); 
 		System.out.print("Enter student id:");
@@ -143,8 +143,8 @@ public class App implements StudentEnrolmentManager{ // This is a flatform for t
 		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
 		for(StudentEnrolment se :arst) {
 			if(se.getStd().getId().equals(sid) && se.getCrs().getId().equals(cid)) {
-			System.out.println(se.getStd().getId()+","+se.getCrs().getId()+","+se.getSem());
-			return;
+			System.out.println(se.toString());
+			return se;
 			}
 		}
 		throw new NoSuchElementException("No student or course is found in the list");
@@ -154,12 +154,15 @@ public class App implements StudentEnrolmentManager{ // This is a flatform for t
 	/**
 	 * SELECT * FROM Enrolled;
 	 */
-	public void getAll() {
+	public ArrayList<StudentEnrolment> getAll() {
 		System.out.println("Get all record in Enrolled table");
 		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
+		ArrayList<StudentEnrolment> result = new ArrayList<StudentEnrolment>();
 		for(StudentEnrolment se :arst) {
-			System.out.println(se.getStd().getId()+","+se.getCrs().getId()+","+se.getSem());
+			System.out.println(se.toString());
+			result.add(se);
 		}
+		return result; // Empty array list
 	} 
 	// For printing all.
 	/**
@@ -167,7 +170,8 @@ public class App implements StudentEnrolmentManager{ // This is a flatform for t
 	 * <code> SELECT cid FROM Enrolled;
 	 *  WHERE sid = X AND sem = Z;</code>
 	 */
-	public void printCourse() {
+	public ArrayList<Course> printCourse() {
+		ArrayList<Course> result = new ArrayList<Course>();
 		StringBuilder sb = new StringBuilder();
 		int counter = 0;
 		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace(); // We don't want update() mtethod to write to csv file but main method is fine.
@@ -193,6 +197,7 @@ public class App implements StudentEnrolmentManager{ // This is a flatform for t
 				System.out.print(se.getCrs().getId()+",");
 				System.out.print(se.getCrs().getName()+",");
 				System.out.println(se.getCrs().getNumOfCredits());
+				result.add(se.getCrs());
 			}
 			if(stackTraceElements[2].getMethodName().equals("main")){ // If getOne() is called from main()
 				// Print to the console and write to csv file
@@ -203,12 +208,8 @@ public class App implements StudentEnrolmentManager{ // This is a flatform for t
 					sb.append("id"+","+"name"+","+"credit");
 					sb.append('\n');
 				}
-				sb.append(se.getCrs().getId());
-				sb.append(',');
-				sb.append(se.getCrs().getName());
-				sb.append(',');
-				sb.append(se.getCrs().getNumOfCredits());
-				sb.append('\n');
+				sb.append(se.getCrs().toString());
+				result.add(se.getCrs());
 			}
 		}
 		if(arst.indexOf(se)==arst.size()-1 && stackTraceElements[2].getMethodName().equals("main")) {
@@ -224,13 +225,16 @@ public class App implements StudentEnrolmentManager{ // This is a flatform for t
 	}
 	if(counter == 0) {
 	throw new NoSuchElementException("No student or semester is found in the list");}
+	return result;
 	}
 		/**
 		 * <p> Let Y is the Course id, Z is the semester. </p>
 		 * <code> SELECT sid FROM Enrolled;
 		 *  WHERE cid = Y AND sem = Z;</code>
+		 * @return 
 		 */
-	public void printStudent() {
+	public ArrayList<Student> printStudent() {
+		ArrayList<Student> result = new ArrayList<Student>();
 		StringBuilder sb = new StringBuilder();
 		int counter = 0;
 		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
@@ -251,12 +255,8 @@ public class App implements StudentEnrolmentManager{ // This is a flatform for t
 					sb.append("id"+","+"name"+","+"birthday");
 					sb.append('\n');
 				}
-				sb.append(se.getStd().getId());
-				sb.append(',');
-				sb.append(se.getStd().getName());
-				sb.append(',');
-				sb.append(se.getStd().getBirthday());
-				sb.append('\n');
+				sb.append(se.getStd().toString());
+				result.add(se.getStd());
 			}
 			if(arst.indexOf(se)==arst.size()-1) {
 				System.out.println(sb.toString());
@@ -270,13 +270,16 @@ public class App implements StudentEnrolmentManager{ // This is a flatform for t
 		}
 		if(counter == 0) {
 		throw new NoSuchElementException("No course or semester is found in the list");}
+		return result;
 		}
 			/**
 			 * <p> Let Z is the semester. </p>
 			 * <code> SELECT cid FROM Enrolled;
 			 *  WHERE sem = Z;</code>
 			 */
-	public void printOffered() {
+	public ArrayList<Course> printOffered() {
+		ArrayList<Course> result = new ArrayList<Course>();
+		StringBuilder sb = new StringBuilder();
 		int counter = 0;
 		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
 		System.out.println("Prints all courses offered in 1 semester");
@@ -287,10 +290,31 @@ public class App implements StudentEnrolmentManager{ // This is a flatform for t
 			if (se.getSem().equals(sem)) {
 				counter++;
 				// Print to the console and write to csv file
-				System.out.println(" Print to the console and write to csv file");
+				if (counter == 1) {
+					sb.append("Print all course in semester"+"("+sem+")");
+					sb.append('\n');
+					sb.append("id"+","+"name"+","+"credit");
+					sb.append('\n');
+				}
+				if(result.contains(se.getCrs())) {
+					continue;
+				}
+				sb.append(se.getCrs().toString());
+				result.add(se.getCrs());
+				//handling duplication
+			}
+			if(arst.indexOf(se)==arst.size()-1) {
+				System.out.println(sb.toString());
+				System.out.println("writing to csv file");
+				try {
+					Printer.saveData(sb.toString());
+				} catch (IOException e) {
+					System.err.print("Make sure you have closed the csv file before you run the program");
+					System.exit(1);}
 			}
 		}
 		if(counter == 0) {
 		throw new NoSuchElementException("No semester is found in the list");}
+		return result;
 	}
 }

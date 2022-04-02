@@ -51,6 +51,11 @@ public class StudentEnrolment {
 		return enList;}
 		throw new AccessDeniedException("Wrong Password!");
 	}
+	@Override
+	public String toString() {
+		return this.getStd().getId()+","+this.getCrs().getId()+","+this.getSem();
+		
+	}
 	public static void removeVisited() {
 		visited.remove(visited.size()-1);
 	}
