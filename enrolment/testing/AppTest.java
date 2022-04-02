@@ -20,6 +20,8 @@ class AppTest {
 	//simulator functions
 	String temp1 = null;
 	String temp2 = null;
+
+	StudentEnrolment se = StudentEnrolment.getList("s3836278").get(0);
 	private static void main() {
 		obj.add();
 	}
@@ -147,14 +149,13 @@ class AppTest {
 	}
 	@Test
 	void testGetOne() { 
-		ArrayList<StudentEnrolment> se = StudentEnrolment.getList("s3836278");
 		try {
 			obj.getOne();
 		}
 		catch (Exception e) {
 			fail(""); 
 		}
-	Assertions.assertTrue(obj.getOne().equals(se.get(0)));// same as assertEqual // expected input S101312 COSC4030
+	Assertions.assertTrue(obj.getOne().equals(se));// same as assertEqual // expected value "se"
 	}
 	@Test
 	void testGetAll() {

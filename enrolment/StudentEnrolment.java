@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class StudentEnrolment {
 	private static ArrayList<StudentEnrolment> enList = new ArrayList<StudentEnrolment>();
 	private static ArrayList<String> visited = new ArrayList<String>(); //Prevent second instantiation of the same object.
-	StudentEnrolment(Student std,Course crs, String sem){
+	private StudentEnrolment(Student std,Course crs, String sem){
 		this.std=std;
 		this.crs=crs;
 		this.sem=sem;
