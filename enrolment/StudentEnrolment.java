@@ -60,7 +60,7 @@ public class StudentEnrolment {
 		visited.remove(visited.size()-1);
 	}
 	// Factory method
-	static StudentEnrolment add(Student std,Course crs, String sem, String adminPassword) throws PrimaryKeyException {
+	public static StudentEnrolment add(Student std,Course crs, String sem, String adminPassword) throws PrimaryKeyException {
 		if (!adminPassword.equals("s3836278")) {
 			throw new AccessDeniedException("Wrong Password!");}
 		String regSem = "[0-9]{4}[A|B|C]";

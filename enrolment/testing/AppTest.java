@@ -95,8 +95,8 @@ class AppTest {
 	}
 	@Test
 	void testAddException() {
-		assertThrows(NoSuchElementException.class,
-	            ()->{obj.add();} ); 
+		assertThrows(NoSuchElementException.class, // No exception is throwed is a failure
+	            ()->{main();} ); 
 	}
 	//
 	@Test
@@ -147,13 +147,14 @@ class AppTest {
 	}
 	@Test
 	void testGetOne() { 
+		ArrayList<StudentEnrolment> se = StudentEnrolment.getList("s3836278");
 		try {
 			obj.getOne();
 		}
 		catch (Exception e) {
 			fail(""); 
 		}
-	Assertions.assertTrue(true);
+	Assertions.assertTrue(obj.getOne().equals(se.get(0)));// same as assertEqual // expected input S101312 COSC4030
 	}
 	@Test
 	void testGetAll() {
@@ -163,7 +164,7 @@ class AppTest {
 		catch (Exception e) {
 			fail(""); 
 		}
-	Assertions.assertTrue(true);
+	Assertions.assertTrue(obj.getAll().equals(StudentEnrolment.getList("s3836278"))); // same as assertEqual
 	}
 
 
