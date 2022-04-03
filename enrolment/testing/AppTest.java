@@ -2,6 +2,7 @@ package enrolment.testing;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
@@ -27,6 +28,7 @@ public class AppTest {
 	StudentEnrolment se = StudentEnrolment.getList("s3836278").get(0); // sid = "S101312" cid = "COSC4030"
 	ArrayList<Course> crs = new ArrayList<Course>(); // sid = "S101312" sem = "2020C"
 	ArrayList<Student> std = new ArrayList<Student>(); // cid = "COSC4030" sem = "2020C"
+	ArrayList<Course> crsOffered = new ArrayList<Course>(); // sem = "2020C"
 	{//IIB
 		crs.add(Course.getList("s3836278").get(0));
 		crs.add(Course.getList("s3836278").get(1));
@@ -34,6 +36,9 @@ public class AppTest {
 		std.add(Student.getList("s3836278").get(0));
 		std.add(Student.getList("s3836278").get(1));
 		std.add(Student.getList("s3836278").get(6));
+		
+		crsOffered.add(Course.getList("s3836278").get(0));
+		crsOffered.add(Course.getList("s3836278").get(1));
 	}
 	private static void main() {
 		obj.add();
@@ -86,6 +91,7 @@ public class AppTest {
 	//add
 	@Test
 	void testAddMain() { // From main
+		System.out.println("\nPlease avoid semester 2020C");
 		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
 		int size= arst.size(); // Initial size
 		try {
@@ -129,7 +135,8 @@ public class AppTest {
 	}
 	//
 	@Test
-	void testUpdate() { //Should excecuted first
+	void testUpdate() { 
+		System.out.println("\nPlease avoid semester 2020C");
 		counter++;
 		int size= arst.size();
 		try {
@@ -148,6 +155,7 @@ public class AppTest {
 	//delete
 	@Test
 	void testDeleteMain() {
+		System.out.println("sid = \"S101153\"  cid = \"COSC3321\"");
 		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
 		int size= arst.size(); // Initial size
 		try {
@@ -159,9 +167,9 @@ public class AppTest {
 	}
 	@Test
 	void testDeleteUpdate() {
-		System.out.println("\ncid = COSC4030");
+		System.out.println("\ncid = PHYS1230");
 		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
-		App.setPlaceholder("S101312", null, "s3836278");
+		App.setPlaceholder("S102192", null, "s3836278");
 		int size= arst.size(); // Initial size
 		try {
 			update(0);
@@ -219,6 +227,7 @@ public class AppTest {
 	}
 	@Test
 	void testPrintCourseUpdate() {
+		System.out.println("\n  sid = \"S101312\" sem = \"2020C\"");
 		try {
 			Assertions.assertTrue(update(0.0).equals(crs));
 		}
@@ -255,6 +264,24 @@ public class AppTest {
 		assertThrows(NoSuchElementException.class,
 	            ()->{obj.printStudent();} ); 
 	}
+	@Test
+	void testPrintOffered() {
+		System.out.println("\n sem = \"2020C\"");
+		try {
+			Assertions.assertTrue(obj.printOffered().equals(crsOffered));
+		}
+		catch (Exception e) {
+			fail(""); 
+		}
+	}
+	
+	@Test
+	void testPrintOfferedException() {
+		System.out.println("\n Please input invalid value");
+		assertThrows(NoSuchElementException.class,
+	            ()->{obj.printOffered();} ); 
+	}
+	
 	
 	
 }
