@@ -101,6 +101,8 @@ public class AppTest {
 	}
 	@Test
 	void testAddUpdate() { // From update
+		System.out.println("\ncid = BUS2232");
+		App.setPlaceholder("S102192", "2021A", "s3836278");
 		StudentEnrolment.getList("s3836278").remove(StudentEnrolment.getList("s3836278").size()-1);
 		StudentEnrolment.removeVisited();
 		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
@@ -115,11 +117,13 @@ public class AppTest {
 	}
 	@Test
 	void testAddExceptionMain() {
+		System.out.println("\n Please input invalid value");
 		assertThrows(NoSuchElementException.class, // No exception is throwed is a failure
 	            ()->{main();} ); 
 	}
 	@Test
 	void testAddExceptionUpdate() {
+		System.out.println("\n Please input invalid value");
 		assertThrows(NoSuchElementException.class, 
 	            ()->{update();} ); 
 	}
@@ -137,12 +141,14 @@ public class AppTest {
 	}
 	@Test
 	void testUpdateException() {
+		System.out.println("\nInput invalid values for switch section only");
 		assertThrows(IllegalArgumentException.class,
 	            ()->{obj.update();} ); // Insert unacceptable input in the switch statement only
 	}
 	//delete
 	@Test
 	void testDeleteMain() {
+		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
 		int size= arst.size(); // Initial size
 		try {
 			main(0);
@@ -153,6 +159,9 @@ public class AppTest {
 	}
 	@Test
 	void testDeleteUpdate() {
+		System.out.println("\ncid = COSC4030");
+		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
+		App.setPlaceholder("S101312", null, "s3836278");
 		int size= arst.size(); // Initial size
 		try {
 			update(0);
@@ -163,16 +172,19 @@ public class AppTest {
 	}
 	@Test
 	void testDeleteExceptionMain() {
+		System.out.println(" \n Please input invalid value");
 		assertThrows(NoSuchElementException.class,
 	            ()->{main(0);} ); 
 	}
 	@Test
 	void testDeleteExceptionUpdate() {	//Should throws exception in testing
+		System.out.println(" \n Please input invalid value");
 		assertThrows(NoSuchElementException.class, 
 	            ()->{update(0);} ); 
 	}
 	@Test
 	void testGetOne() { 
+		System.out.println("\n sid = \"S101312\" cid = \"COSC4030\"");
 		try {
 			Assertions.assertTrue(obj.getOne().equals(se));// same as assertEqual // expected value "se"
 		}
@@ -182,6 +194,7 @@ public class AppTest {
 	}
 	@Test
 	void testGetOneException() {
+		System.out.println("Please input invalid value");
 		assertThrows(NoSuchElementException.class,
 	            ()->{obj.getOne();} ); 
 	}
@@ -196,6 +209,7 @@ public class AppTest {
 	}
 	@Test
 	void testPrintCourseMain() {
+		System.out.println("\nsid = \"S101312\" sem = \"2020C\"");
 		try {
 			Assertions.assertTrue(main(0.0).equals(crs));
 		}
@@ -214,16 +228,19 @@ public class AppTest {
 	}
 	@Test
 	void testPrintCourseExceptionMain() {
+		System.out.println("\n Please input invalid value");
 		assertThrows(NoSuchElementException.class,
 	            ()->{main(0.0);} ); 
 	}
 	@Test
 	void testPrintCourseExceptionUpdate() {
+		System.out.println("\n Please input invalid value");
 		assertThrows(NoSuchElementException.class,
 	            ()->{update(0.0);} ); 
 	}
 	@Test
 	void testPrintStudent() {
+		System.out.println("\n  cid = \"COSC4030\" sem = \"2020C\"");
 		try {
 			Assertions.assertTrue(obj.printStudent().equals(std));
 		}
@@ -234,6 +251,7 @@ public class AppTest {
 	
 	@Test
 	void testPrintStudentException() {
+		System.out.println("\n Please input invalid value");
 		assertThrows(NoSuchElementException.class,
 	            ()->{obj.printStudent();} ); 
 	}
