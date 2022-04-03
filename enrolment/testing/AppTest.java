@@ -12,21 +12,37 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 import enrolment.App;
+import enrolment.Course;
+import enrolment.Student;
 import enrolment.StudentEnrolment;
 
-class AppTest {
+public class AppTest {
 	public static App obj = App.getApp();
 	//simulator functions
-	String temp1 = null;
-	String temp2 = null;
-
-	StudentEnrolment se = StudentEnrolment.getList("s3836278").get(0);
+	int counter = 0;
+	/** PLEASE REMEMBER THESE VALUES FOR TESTING EXPECTED VALUES*/
+	ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
+	StudentEnrolment se = StudentEnrolment.getList("s3836278").get(0); // sid = "S101312" cid = "COSC4030"
+	ArrayList<Course> crs = new ArrayList<Course>(); // sid = "S101312" sem = "2020C"
+	ArrayList<Student> std = new ArrayList<Student>(); // cid = "COSC4030" sem = "2020C"
+	{//IIB
+		crs.add(Course.getList("s3836278").get(0));
+		crs.add(Course.getList("s3836278").get(1));
+		
+		std.add(Student.getList("s3836278").get(0));
+		std.add(Student.getList("s3836278").get(1));
+		std.add(Student.getList("s3836278").get(6));
+	}
 	private static void main() {
 		obj.add();
 	}
 	private static void main(int i) {
 		obj.delete();
+	}
+	private static ArrayList<Course> main(double i) {
+		return obj.printCourse();
 	}
 
 	private static void update() {
@@ -36,6 +52,9 @@ class AppTest {
 	private static void update(int i) {
 		
 		obj.delete();
+	}
+	private static ArrayList<Course> update(double i) {
+		return obj.printCourse();
 	}
 
 	
@@ -61,7 +80,6 @@ class AppTest {
 	}
 
 	@Test
-
 	void testGetApp() {
 		assertEquals(obj,App.getApp());
 	}
@@ -96,22 +114,25 @@ class AppTest {
 	
 	}
 	@Test
-	void testAddException() {
+	void testAddExceptionMain() {
 		assertThrows(NoSuchElementException.class, // No exception is throwed is a failure
 	            ()->{main();} ); 
 	}
+	@Test
+	void testAddExceptionUpdate() {
+		assertThrows(NoSuchElementException.class, 
+	            ()->{update();} ); 
+	}
 	//
 	@Test
-	void testUpdate() {
-		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
+	void testUpdate() { //Should excecuted first
+		counter++;
 		int size= arst.size();
 		try {
 			obj.update();
 		} catch (Exception e) {
 			fail(""); 
 		}
-		String placeholder = arst.get(arst.size()-1).getStd().getId();
-		App.setPlaceholder(placeholder, null, "s3836278");
 		assertTrue(StudentEnrolment.getList("s3836278").size()!=size);
 	}
 	@Test
@@ -122,7 +143,6 @@ class AppTest {
 	//delete
 	@Test
 	void testDeleteMain() {
-		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
 		int size= arst.size(); // Initial size
 		try {
 			main(0);
@@ -133,7 +153,6 @@ class AppTest {
 	}
 	@Test
 	void testDeleteUpdate() {
-		ArrayList<StudentEnrolment> arst = StudentEnrolment.getList("s3836278");
 		int size= arst.size(); // Initial size
 		try {
 			update(0);
@@ -143,30 +162,81 @@ class AppTest {
 		assertTrue(StudentEnrolment.getList("s3836278").size()!=size); 
 	}
 	@Test
-	void testDeleteException() {
+	void testDeleteExceptionMain() {
 		assertThrows(NoSuchElementException.class,
-	            ()->{obj.delete();} ); 
+	            ()->{main(0);} ); 
+	}
+	@Test
+	void testDeleteExceptionUpdate() {	//Should throws exception in testing
+		assertThrows(NoSuchElementException.class, 
+	            ()->{update(0);} ); 
 	}
 	@Test
 	void testGetOne() { 
 		try {
-			obj.getOne();
+			Assertions.assertTrue(obj.getOne().equals(se));// same as assertEqual // expected value "se"
 		}
 		catch (Exception e) {
 			fail(""); 
 		}
-	Assertions.assertTrue(obj.getOne().equals(se));// same as assertEqual // expected value "se"
+	}
+	@Test
+	void testGetOneException() {
+		assertThrows(NoSuchElementException.class,
+	            ()->{obj.getOne();} ); 
 	}
 	@Test
 	void testGetAll() {
 		try {
-			obj.getAll();
+			Assertions.assertTrue(obj.getAll().equals(StudentEnrolment.getList("s3836278"))); // same as assertEqual
 		}
 		catch (Exception e) {
 			fail(""); 
 		}
-	Assertions.assertTrue(obj.getAll().equals(StudentEnrolment.getList("s3836278"))); // same as assertEqual
 	}
-
-
+	@Test
+	void testPrintCourseMain() {
+		try {
+			Assertions.assertTrue(main(0.0).equals(crs));
+		}
+		catch (Exception e) {
+			fail(""); 
+		}
+	}
+	@Test
+	void testPrintCourseUpdate() {
+		try {
+			Assertions.assertTrue(update(0.0).equals(crs));
+		}
+		catch (Exception e) {
+			fail(""); 
+		}
+	}
+	@Test
+	void testPrintCourseExceptionMain() {
+		assertThrows(NoSuchElementException.class,
+	            ()->{main(0.0);} ); 
+	}
+	@Test
+	void testPrintCourseExceptionUpdate() {
+		assertThrows(NoSuchElementException.class,
+	            ()->{update(0.0);} ); 
+	}
+	@Test
+	void testPrintStudent() {
+		try {
+			Assertions.assertTrue(obj.printStudent().equals(std));
+		}
+		catch (Exception e) {
+			fail(""); 
+		}
+	}
+	
+	@Test
+	void testPrintStudentException() {
+		assertThrows(NoSuchElementException.class,
+	            ()->{obj.printStudent();} ); 
+	}
+	
+	
 }

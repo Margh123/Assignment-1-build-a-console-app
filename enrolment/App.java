@@ -20,12 +20,13 @@ public class App implements StudentEnrolmentManager{ // This is a flatform for t
 		return turtle;
 		
 	}
-	private static String placeholder;
-	private static String placeholder2;// placeholder is a single word in english
+	private static String placeholder;// placeholders are used to act as bridges to pass values.
+	private static String placeholder2;
 	/*public static String[] getPlaceholder() {
 		String[] arr = {placeholder, placeholder2};
 		return arr;
 	}*/
+	
 	public static void setPlaceholder(String placeholder, String placeholder2, String adminPassword) {
 		if (adminPassword.equals("s3836278")) {
 			App.placeholder = placeholder;
@@ -187,7 +188,7 @@ public class App implements StudentEnrolmentManager{ // This is a flatform for t
 	for (StudentEnrolment se : arst) {
 		if ((se.getStd().getId()+se.getSem()).equals(sid+sem)) {
 			counter++;
-			if(stackTraceElements[2].getMethodName().equals("update")){ // If getOne() is called from update()
+			if(stackTraceElements[2].getMethodName().equals("update")){ // If printCourse() is called from update()
 				// Only print for update()
 				if (counter == 1) {
 					System.out.println("Print all course for "+se.getStd().getName()+" "+ "("+se.getStd().getId()+")"+ " " +
@@ -199,7 +200,7 @@ public class App implements StudentEnrolmentManager{ // This is a flatform for t
 				System.out.println(se.getCrs().getNumOfCredits());
 				result.add(se.getCrs());
 			}
-			if(stackTraceElements[2].getMethodName().equals("main")){ // If getOne() is called from main()
+			if(stackTraceElements[2].getMethodName().equals("main")){ // If printCourse() is called from main()
 				// Print to the console and write to csv file
 				if (counter == 1) {
 					sb.append("Print all course for "+se.getStd().getName()+" "+ "("+se.getStd().getId()+")"+ " " +
